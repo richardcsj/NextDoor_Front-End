@@ -12,8 +12,6 @@ export class DishdetailComponent implements OnInit {
   @Input()
   dish: Dish;
 
-  comments = Dish.comments;
-
   constructor() { }
 
   ngOnInit() {
