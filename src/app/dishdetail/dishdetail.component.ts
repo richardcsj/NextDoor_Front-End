@@ -18,7 +18,7 @@ export class DishdetailComponent implements OnInit {
 
 
   dish: Dish;
-  dishcopy: null;
+  dishcopy: any;
   dishIds: number[];
   prev: number;
   next: number;
@@ -33,7 +33,7 @@ export class DishdetailComponent implements OnInit {
   validationMessages = {
     'author': {
       'required': 'Author name is required.',
-      'minlength' 'Author name must be at lest 2 characters.'
+      'minlength': 'Author name must be at lest 2 characters.'
     },
     'comment': {
       'required': 'Comment is required.'
