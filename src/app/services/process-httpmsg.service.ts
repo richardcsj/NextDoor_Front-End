@@ -12,7 +12,7 @@ export class ProcessHttpmsgService {
 
   public extractData(res: Response) {
     let body = res.json();
-
+    console.log(body);
     return body || {};
   }
 
