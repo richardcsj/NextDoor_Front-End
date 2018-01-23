@@ -1,1 +1,1 @@
-export const baseURL = 'https://confusion-rest.herokuapp.com/'
+export const baseURL = 'http://localhost:3000/';
