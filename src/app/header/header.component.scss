@@ -10,12 +10,13 @@ $background-pale: #D1C4E9;
 }
 
 .jumbotron {
-    @include zero-margin(70px,30px);
-    background: $background-light ;
-    color:floralwhite;
-    min-height: 150px;
+    @include zero-margin(190px,30px);
+    color: white;
+    background: url('../../assets/images/header-background.png') no-repeat center center fixed;
+
+
 }
 
 .active {
-  background: $background-moredark;
+  background: $background-pale;
 }
