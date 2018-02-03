@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 
 
 import 'hammerjs';
@@ -55,7 +56,10 @@ import { HighlightDirective } from './directives/highlight.directive';
     FlexLayoutModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    RestangularModule.forRoot(RestangularConfigFactory)
+    RestangularModule.forRoot(RestangularConfigFactory),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBLIbVgRo799nFr3PsU_VaYroXreEinDOE'
+    })
 
   ],
   providers: [ DishService,

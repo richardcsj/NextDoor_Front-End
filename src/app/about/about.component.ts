@@ -18,6 +18,10 @@ import { expand } from '../animations/app.animation';
 })
 export class AboutComponent implements OnInit {
 
+  lat: number = 33.9539216;
+  lng: number = -84.1217713;
+  
+
   constructor() { }
 
   ngOnInit() {
