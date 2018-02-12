@@ -1,38 +1,43 @@
-<md-toolbar md-dialog-title color="primary">
+<mat-toolbar mat-dialog-title color="primary">
   Login
   <span class="flex-spacer"></span>
-  <button md-button md-dialog-close>&times;</button>
-</md-toolbar>
+  <button mat-button mat-dialog-close>&times;</button>
+</mat-toolbar>
 
 <p>{{ user | json }}</p>
+<div *ngIf="errMess">
+  <h2>Error</h2>
+  <h4>{{errMess}}</h4>
+</div>
+
 
 <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmit()">
-  <md-dialog-content>
+  <mat-dialog-content>
   <p>
-    <md-input-container dividerColor="{{username.invalid && !username.pristine ? 'warn':'primary'}}">
-      <input mdInput placeholder="Username" type="text" [(ngModel)]="user.username" name="username" #username="ngModel" required>
-      <md-hint>
+    <mat-input-container dividerColor="{{username.invalid && !username.pristine ? 'warn':'primary'}}">
+      <input matInput placeholder="Username" type="text" [(ngModel)]="user.username" name="username" #username="ngModel" required>
+      <mat-hint>
         <span [hidden]="username.pristine">
           <span [hidden]="!username.errors?.required">username is required</span>
         </span>
-      </md-hint>
-    </md-input-container>
-    <md-input-container dividerColor="{{password.invalid && !password.pristine ? 'warn':'primary'}}">
-      <input mdInput placeholder="Password" type="password" [(ngModel)]="user.password" name="password" #password="ngModel" required>
-      <md-hint>
+      </mat-hint>
+    </mat-input-container>
+    <mat-input-container dividerColor="{{password.invalid && !password.pristine ? 'warn':'primary'}}">
+      <input matInput placeholder="Password" type="password" [(ngModel)]="user.password" name="password" #password="ngModel" required>
+      <mat-hint>
         <span [hidden]="password.pristine">
           <span [hidden]="!password.errors?.required">password is required</span>
         </span>
-      </md-hint>
-    </md-input-container>
-    <md-checkbox [(ngModel)]="user.remember" name="remember">
+      </mat-hint>
+    </mat-input-container>
+    <mat-checkbox [(ngModel)]="user.remember" name="remember">
       Remember Me
-    </md-checkbox>
+    </mat-checkbox>
   </p>
-</md-dialog-content>
-<md-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
   <span class="flex-spacer"></span>
-    <button md-button md-dialog-close>Cancel</button>
-    <button type="submit" md-button class="background-primary text-floral-white" [disabled]="loginForm.form.invalid">Login</button>
-</md-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="loginForm.form.invalid">Login</button>
+</mat-dialog-actions>
 </form>

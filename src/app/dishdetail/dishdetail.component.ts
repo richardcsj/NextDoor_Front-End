@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import { Params, ActivatedRoute } from '@angular/router';
@@ -28,12 +28,12 @@ import 'rxjs/add/operator/switchMap';
 })
 export class DishdetailComponent implements OnInit {
 
+  @ViewChild('cform') commentFormDirective;
 
   dish: Dish;
-  dishcopy: any;
-  dishIds: number[];
-  prev: number;
-  next: number;
+  dishIds: String[];
+  prev: String;
+  next: String;
   errorMsg: string;
   comment: Comment;
   visibility = 'shown';
@@ -69,16 +69,22 @@ export class DishdetailComponent implements OnInit {
       this.route.params
         .switchMap((params: Params) => {
           this.visibility = 'hidden';
-          return this.dishservice.getDish(+params['id']);
+          return this.dishservice.getDish(params['id']);
         })
-        .subscribe(dish => { this.dish = dish; this.dishcopy = dish;  this.setPrevNext(dish.id); this.visibility = 'shown';  },
+        .subscribe(dish => {
+          this.dish = dish;
+          this.setPrevNext(dish._id);
+          this.visibility = 'shown';
+        },
         errormsg => this.errorMsg = <any>errormsg);
     }
 
-    setPrevNext(dishId: number) {
-      let index = this.dishIds.indexOf(dishId);
-      this.prev = this.dishIds[(this.dishIds.length + index - 1)%this.dishIds.length];
-      this.next = this.dishIds[(this.dishIds.length + index + 1)%this.dishIds.length];
+    setPrevNext(dishId: String) {
+      if(this.dishIds) {
+        let index = this.dishIds.indexOf(dishId);
+        this.prev = this.dishIds[(this.dishIds.length + index - 1)%this.dishIds.length];
+        this.next = this.dishIds[(this.dishIds.length + index + 1)%this.dishIds.length];
+      }
     }
 
   goBack(): void {
@@ -99,26 +105,21 @@ export class DishdetailComponent implements OnInit {
   }
 
   onSubmit() {
-    this.comment = this.commentForm.value;
-    this.comment.date= new Date().toISOString();
-    console.log(this.comment);
-    this.dishcopy.comments.push(this.comment);
-    this.dishcopy.save()
+    console.log(this.commentForm.value);
+    this.dishservice.postComment(this.dish._id, this.commentForm.value)
       .subscribe(dish => this.dish = dish);
     this.commentForm.reset({
-      author: '',
       rating: 5,
       comment: ''
     });
+    this.commentFormDirective.resetForm();
   }
 
   onValueChanged(data?: any) {
-    if (!this.commentForm) {
-      return;
-    }
+    if (!this.commentForm) { return; }
     const form = this.commentForm;
-
     for (const field in this.formErrors) {
+      // clear previous error message (if any)
       this.formErrors[field] = '';
       const control = form.get(field);
       if (control && control.dirty && !control.valid) {

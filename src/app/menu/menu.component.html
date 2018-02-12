@@ -10,18 +10,18 @@
   </div>
 
   <div fxFlex *ngIf="dishes" [@expand]="expand">
-    <md-grid-list cols="2" rowHeight="200px">
-      <md-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]" appHighlight>
+    <mat-grid-list cols="2" rowHeight="200px">
+      <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish._id]" appHighlight>
         <img height="200px" src="{{BaseURL +  dish.image}}" alt={{dish.name}}>
-        <md-grid-tile-footer>
-          <h1 md-line>{{dish.name | uppercase}}</h1>
-        </md-grid-tile-footer>
-      </md-grid-tile>
-    </md-grid-list>
+        <mat-grid-tile-footer>
+          <h1 mat-line>{{dish.name | uppercase}}</h1>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
   </div>
 
   <div [hidden]="dishes || errorMsg">
-    <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
   </div>
 
   <div *ngIf="errorMsg">
@@ -29,22 +29,5 @@
     <h4>{{errorMsg}}</h4>
   </div>
 
-  <!-- <div fxFlex *ngIf="selectedDish">
-    <md-card>
-      <md-card-header>
-        <md-card-title>
-          <h3>{{selectedDish.name | uppercase}}</h3>
-        </md-card-title>
-      </md-card-header>
-      <img md-card-image src="{{selectedDish.image}}" alt="{{selectedDish.name}}">
-      <md-card-content>
-        <p>{{selectedDish.description}}</p>
-      </md-card-content>
-      <md-card-actions>
-        <button md-button>LIKE</button>
-        <button md-button>SHARE</button>
-      </md-card-actions>
-    </md-card>
-  </div> -->
 
 </div>

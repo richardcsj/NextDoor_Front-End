@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
 
+import { AppComponent } from '../app.component';
 import { MenuComponent } from '../menu/menu.component';
 import { DishdetailComponent } from '../dishdetail/dishdetail.component';
 import { HomeComponent } from '../home/home.component';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
 import { AboutComponent } from '../about/about.component';
 import { ContactComponent } from '../contact/contact.component';
 

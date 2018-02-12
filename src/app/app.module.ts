@@ -2,8 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule,
+  MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
+  MatSlideToggleModule, MatToolbarModule, MatListModule, MatGridListModule,
+  MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
@@ -25,6 +28,9 @@ import { LoginComponent } from './login/login.component';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { ProcessHttpmsgService } from './services/process-httpmsg.service';
+import { AuthService } from './services/auth.service';
+import { AuthInterceptor, UnauthorizedInterceptor } from './services/auth.interceptor';
+import { FeedbackService } from './services/feedback.service';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
@@ -32,7 +38,7 @@ import { baseURL } from './shared/baseurl';
 import { RestangularModule, Restangular } from 'ngx-restangular';
 import { RestangularConfigFactory } from './shared/restConfig';
 import { HighlightDirective } from './directives/highlight.directive';
-
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -51,8 +57,11 @@ import { HighlightDirective } from './directives/highlight.directive';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule,
-    MaterialModule,
+    HttpClientModule,
+    MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule,
+    MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
+    MatSlideToggleModule, MatToolbarModule, MatListModule, MatGridListModule,
+    MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule,
     FlexLayoutModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -62,12 +71,26 @@ import { HighlightDirective } from './directives/highlight.directive';
     })
 
   ],
-  providers: [ DishService,
+  providers: [
+    DishService,
     PromotionService,
+    { provide: 'BaseURL', useValue: baseURL },
     ProcessHttpmsgService,
-    {provide: 'BaseURL', useValue: baseURL } ],
+    FeedbackService,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true
+    }
+  ],
   entryComponents: [
-    LoginComponent
+      LoginComponent
   ],
   bootstrap: [AppComponent]
 })

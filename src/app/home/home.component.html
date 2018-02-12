@@ -5,48 +5,44 @@
      fxLayoutAlign.gt-md="space-around center"
      fxLayoutGap="10px">
 
-<md-card *ngIf="dish" fxFlex [@expand]="expand">
-  <md-card-header>
-    <div md-card-avatar></div>
-    <md-card-title>
+<mat-card *ngIf="dish" fxFlex [@expand]>
+  <mat-card-header>
+    <div mat-card-avatar></div>
+    <mat-card-title>
       <h3>{{dish.name | uppercase}}</h3>
-    </md-card-title>
-  </md-card-header>
-  <img md-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
-  <md-card-content>
+    </mat-card-title>
+  </mat-card-header>
+  <img mat-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
+  <mat-card-content>
     <p>{{dish.description}}
     </p>
-  </md-card-content>
-</md-card>
-<div [hidden]="dish || dishErrorMsg">
-  <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
-</div>
+  </mat-card-content>
+</mat-card>
+  <div [hidden]="dish || dishErrMess">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div *ngIf="dishErrMess">
+    <h2>Error</h2>
+    <h4>{{dishErrMess}}</h4>
+  </div>
 
-<div *ngIf="dishErrorMsg">
-  <h2>Error</h2>
-  <h4>{{dishErrorMsg}}</h4>
-</div>
-
-<md-card *ngIf="promotion" fxFlex [@expand]="expand">
-  <md-card-header>
-    <div md-card-avatar></div>
-    <md-card-title>
+<mat-card *ngIf="promotion" fxFlex [@expand]>
+  <mat-card-header>
+    <div mat-card-avatar></div>
+    <mat-card-title>
       <h3>{{promotion.name | uppercase}}</h3>
-    </md-card-title>
-  </md-card-header>
-  <img md-card-image src="{{promotion.image}}" alt={{promotion.name}}>
-  <md-card-content>
+    </mat-card-title>
+  </mat-card-header>
+  <img mat-card-image src="{{BaseURL + promotion.image}}" alt={{promotion.name}}>
+  <mat-card-content>
     <p>{{promotion.description}}
     </p>
-  </md-card-content>
-</md-card>
-<div [hidden]="promotion || promotionErrorMsg">
-  <md-spinner></md-spinner><h4>Loading . . . Plase Wait</h4>
-</div>
-
-<div *ngIf="promotionErrorMsg">
-  <h2>Error</h2>
-  <h4>{{promotionErrorMsg}}</h4>
-</div>
-
-</div>
+  </mat-card-content>
+</mat-card>
+  <div [hidden]="promotion || promoErrMess">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div *ngIf="promoErrMess">
+    <h2>Error</h2>
+    <h4>{{dishErrMess}}</h4>
+  </div>

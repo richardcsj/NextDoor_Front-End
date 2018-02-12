@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Dish } from '../shared/dish';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { baseURL } from '../shared/baseurl';
@@ -19,28 +19,34 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class DishService {
 
-  constructor(private restangular: Restangular,
+  constructor(private http: HttpClient,
     private processHttpMsgService: ProcessHttpmsgService) { }
 
-  getDishes(): Observable<Dish[]> {
-    return this.restangular.all('dishes').getList();
+    getDishes(): Observable<Dish[]> {
+      return this.http.get(baseURL + 'dishes')
+      .catch(error => { return this.processHttpMsgService.handleError(error); });
+    }
 
+    getDish(id: string): Observable<Dish> {
+      return  this.http.get(baseURL + 'dishes/'+ id)
+                      .catch(error => { return this.processHttpMsgService.handleError(error); });
+    }
+
+    getFeaturedDish(): Observable<Dish> {
+      return this.http.get(baseURL + 'dishes?featured=true')
+                      .map(dishes => dishes[0])
+                      .catch(error => { return this.processHttpMsgService.handleError(error); });
+    }
+
+    getDishIds(): Observable<String[] | any> {
+      return this.getDishes()
+        .map(dishes => { return dishes.map(dish => dish._id)})
+        .catch(error => { return error; });
+    }
+
+    postComment(dishId: string, comment: any) {
+      return this.http.post(baseURL + 'dishes/' + dishId + '/comments', comment)
+        .catch(error => { return this.processHttpMsgService.handleError(error); });
+
+    }
   }
-
-  getDish(id: number): Observable<Dish> {
-    return this.restangular.one('dishes',id).get();
-
-  }
-
-  getFeaturedDish(): Observable<Dish> {
-    return this.restangular.all('dishes').getList({featured: true})
-    .map(dishes => dishes[0]);
-
-  }
-
-  getDishIds(): Observable<any> {
-    return this.getDishes()
-      .map(dishes => { return dishes.map(dish => dish.id) })
-      .catch(error => { return error; } );
-  }
-}
