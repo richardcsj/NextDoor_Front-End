@@ -39,6 +39,7 @@ import { RestangularModule, Restangular } from 'ngx-restangular';
 import { RestangularConfigFactory } from './shared/restConfig';
 import { HighlightDirective } from './directives/highlight.directive';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     AboutComponent,
     ContactComponent,
     LoginComponent,
-    HighlightDirective
+    HighlightDirective,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     }
   ],
   entryComponents: [
-      LoginComponent
+      LoginComponent,
+      SignupComponent
   ],
   bootstrap: [AppComponent]
 })

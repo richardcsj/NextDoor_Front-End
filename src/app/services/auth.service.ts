@@ -30,7 +30,7 @@ export class AuthService {
  authToken: string = undefined;
 
   constructor(private http: HttpClient,
-    private processHTTPMsgService: ProcessHttpmsgService) { 
+    private processHTTPMsgService: ProcessHttpmsgService) {
   }
 
   checkJWTtoken() {
@@ -82,8 +82,14 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
   }
 
-  signUp() {
-
+  signUp(user: any): Observable<any> {
+    return this.http.post<AuthResponse>(baseURL + 'users/signup',
+      {"username": user.username, "password": user.password})
+      .map(res => {
+          this.storeUserCredentials({username: user.username, token: res.token});
+          return {'success': true, 'username': user.username };
+      })
+        .catch(error => { return this.processHTTPMsgService.handleError(error); });
   }
 
   logIn(user: any): Observable<any> {

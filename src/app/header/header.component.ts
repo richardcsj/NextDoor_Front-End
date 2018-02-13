@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
+import { SignupComponent } from '../signup/signup.component';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -37,6 +38,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         console.log(result);
       });
   }
+
+  openRegisterForm() {
+    let signupRef = this.dialog.open(SignupComponent, {width: '500px', height: '450px'});
+
+    signupRef.afterClosed()
+    .subscribe(result => {
+      console.log(result);
+    });
+}
 
   logOut() {
     this.username = undefined;
